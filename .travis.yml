@@ -10,6 +10,7 @@ deploy:
   provider: pypi
   distributions: sdist bdist_wheel
   user: kruegg21
+  skip_existing: true
   password:
     secure: eNBOu1xwGBihU8g7w9MuQZd7p+XLotxENm9arWH1tHF7aB2HAlwCZfhisRX96e+4aSHHe6h5YBVHec+7ogut44BqmEvzzQuHawgAWnD6ea2/PB+ZN0GvTx8XstWSmk/ENdmCZHRozmuViYEHdq0vSR66kyFnQ+Kl9vUPH+Zx/IF+Up3Lb2Ik3SnYwpl0ul6bOKUw+KUCuOvQC6HnbrpWxhdFQUouq4STrhISRxwHoh0RzUK6Igin7YfARkRtS0xuc9/vMAk13+dVW/n2rRYD8tcCUuGUv6HWocnNDF5OFgOmkGPZl73UiyXohY7Jp2RGZqTmIraBPVyFil8jm43jrlmC0yt9F2flBKyTxatE3m7T4djhaJMLedBX4SrSPUkvop3yWU2yhRfvyMCuItRWRvZRamGALXuWpIwpxjHhQ0jmmhbk4t+3v1gy+RPxkVOX9Lzdg/KRjXMZRGnBPS+THryiCfJRPsY2S/bVdDdQ5ko84E0T+43bcP3UC8s2Fxc9wZh2XZ/+3sNqgYmhcLrORbwtw8AwNBkskF50qntGEnSETQ4JcCe+xOStTZR7v2NCa9Ro1uetByc7DbV+cR+/zJ17xko5SRJppPswP6iTW61Y+c6wmZw9RSst4KZn+Ng1fEkfy5GyUyzylr2L+Z9jfP0Pz0pmqdt7DFMFzvv+nZc=
   on:
