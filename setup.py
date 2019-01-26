@@ -19,7 +19,7 @@ test_requirements = [ ]
 
 setup(
     author="yes",
-    author_email='Kurt Bergen Ruegg',
+    author_email='kurtruegg92@gmail.com',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
