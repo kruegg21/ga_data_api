@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # ga_data_api documentation build configuration file, created by
-# sphinx-quickstart on Fri Jun  9 13:47:02 2017.
+# sphinx-w
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.

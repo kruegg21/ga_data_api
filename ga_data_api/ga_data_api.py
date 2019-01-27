@@ -16,7 +16,7 @@ Section breaks are created by resuming unindented text. Section breaks
 are also implicitly created anytime a new section starts.
 
 Attributes:
-    module_level_variable1 (int): Module level variables may be documented in
+    module level variable1 (int): Module level variables may be documented in
         either the ``Attributes`` section of the module docstring, or in an
         inline docstring immediately following the variable.
 
@@ -32,9 +32,23 @@ Todo:
    http://google.github.io/styleguide/pyguide.html
 
 """
+import logging
+
+import _send_notification  # pylint: disable=import-error
+import _settings_accessor  # pylint: disable=import-error
+
+
+_SETTINGS = _settings_accessor.SettingsAccessor()
+_LOGGER = logging.getLogger(__name__)
+_HANDLER = _send_notification.EmailHandler()
+_LOGGER.addHandler(_HANDLER)
+_LOGGER.setLevel(logging.WARNING)
+
 
 def main():
-    pass
+    """Main function."""
+    _LOGGER.warning('here')
+
 
 if __name__ == '__main__':
     main()
