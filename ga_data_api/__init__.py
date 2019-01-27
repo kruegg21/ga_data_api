@@ -10,6 +10,7 @@ __email__ = 'Kurt Bergen Ruegg'
 __version__ = '0.1.7'
 
 
+print('here')
 logging.basicConfig(level=logging.DEBUG,
                     filename=os.path.join(os.path.dirname(__file__),
                                           'logs', 'debug.log'),

@@ -5,10 +5,23 @@ This module contains classes for accessing settings for module. Used to
 abstract settings so they can be read from a variety of sources.
 
 Attributes:
-    EMAIL_ADDRESS (str): Admin email account (address we want to send alerts
-        from).
+    logger (logging.Logger): Logger set to DEBUG level.
 
-    EMAIL_PASSWORD (str): Admin email password.
+    logging config JSON path (str): String of location of config file for
+        logging.
+
+    logging config file name (str): String of file name of config file for
+        logging.
+
+    logging config place (str): Full path of config file for logging.
+
+    email config JSON path (str): String of location of config file for
+        email notifications.
+
+    email config file name (str): String of file name of config file for
+        email notifications.
+
+    email config place (str): Full path of config file for email notifications.
 
 Todo:
 
@@ -17,28 +30,51 @@ Todo:
 
 """
 import logging
+import json
 import os
 
-import hjson
 
 _LOGGER = logging.getLogger(__name__)
-_LOGGER.addHandler(logging.StreamHandler())
 _LOGGER.setLevel(logging.DEBUG)
-_EMAIL_HJSON_PATH = os.path.join(os.path.dirname(__file__), 'settings')
-_EMAIL_HJSON_FILE_NAME = 'email.hjson'
+
+_LOGGING_CONFIG_JSON_PATH = os.path.join(os.path.dirname(__file__), 'settings')
+_LOGGING_CONFIG_FILE_NAME = 'logging.json'
+_LOGGING_CONFIG_PLACE = os.path.join(_LOGGING_CONFIG_JSON_PATH,
+                                     _LOGGING_CONFIG_FILE_NAME)
+_EMAIL_CONFIG_JSON_PATH = os.path.join(os.path.dirname(__file__), 'settings')
+_EMAIL_CONFIG_JSON_FILE_NAME = 'email.json'
+_EMAIL_CONFIG_PLACE = os.path.join(_EMAIL_CONFIG_JSON_PATH,
+                                   _EMAIL_CONFIG_JSON_FILE_NAME)
 
 
-def _attempt_read_file(file):
+def _attempt_read_json_file(file_place, file_not_found_message):
+    """Attempt to read JSON file.
+
+    That's it.
+
+    Args:
+        file place (str): Where file is found.
+        file not found message (str): Message to go along with notification if
+            is not found.
+
+    Returns:
+        Python object of contents of file | None
+
+    """
     try:
-        with open(file) as f:
-            return hjson.load(f)
-    except FileNotFoundError as e:
-        _LOGGER.error(e)
-        _LOGGER.debug('This means WARNING and ERROR emails will not '
-                      'be sent to you')
+        with open(file_place) as file:
+            return json.load(file)
+    except FileNotFoundError as error_message:
+        _LOGGER.error(error_message)
+        _LOGGER.debug(file_not_found_message)
 
 
-_EMAIL_CONFIG = _attempt_read_file(os.path.join(_EMAIL_HJSON_PATH, _EMAIL_HJSON_FILE_NAME))
+_EMAIL_CONFIG = _attempt_read_json_file(_EMAIL_CONFIG_PLACE,
+                                        'This means WARNING and ERROR emails '
+                                        'will not be sent to you.')
+_LOGGING_CONFIG = _attempt_read_json_file(_LOGGING_CONFIG_PLACE,
+                                          'This means no logging will be '
+                                          'configured for this module.')
 
 
 def email_config_exists():
@@ -47,7 +83,7 @@ def email_config_exists():
     Returns:
         bool: The return value. True for success, False otherwise.
     """
-    return True if _EMAIL_CONFIG else False
+    return bool(_EMAIL_CONFIG)
 
 
 class SettingsAccessor:
@@ -89,3 +125,8 @@ class SettingsAccessor:
     def email_host(self):
         """list: list of email password of Admins."""
         return _EMAIL_CONFIG.get('host', None)
+
+    @property
+    def logging_config(self):
+        """dict: dict of configuration settings for logging module"""
+        return _LOGGING_CONFIG
